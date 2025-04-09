@@ -1,0 +1,61 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    cursor: url('assets/cursor.png'), crosshair;
+    font-family: 'Segoe UI', sans-serif;
+  }
+  
+  .game-container {
+    background-image: url('assets/strzelnica.jpg');
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .overlay {
+    position: absolute;
+    width: 100%;
+    z-index: 2;
+    top: 10px;
+  }
+  
+  .target {
+    width: 80px;
+    position: absolute;
+    display: none;
+    cursor: url('assets/cursor.png'), crosshair !important;
+  }
+  
+  .fast {
+    animation: move 1s linear infinite alternate;
+  }
+  
+  .medium {
+    animation: move 1.5s linear infinite alternate;
+  }
+  
+  .slow {
+    animation: move 2s linear infinite alternate;
+  }
+  
+  @keyframes move {
+    from { left: 0%; }
+    to { left: 90%; }
+  }
+  
+  .game-over {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0,0,0,0.8);
+    padding: 40px;
+    border-radius: 10px;
+    display: none;
+    z-index: 10;
+    border: 2px solid #ffc107;
+  }
+  
