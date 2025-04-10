@@ -1,61 +1,137 @@
 body, html {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    cursor: url('assets/cursor.png'), crosshair;
-    font-family: 'Segoe UI', sans-serif;
-  }
-  
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background: #111;
+  font-family: 'Segoe UI', sans-serif;
+  cursor: url('assets/cursor.png'), crosshair;
+}
+
+.game-container {
+  height: 600px;
+  width: 100%;
+  max-width: 900px;
+  margin: auto;
+  position: relative;
+  overflow: hidden;
+  background-image: url('assets/strzelnica.jpg');
+  background-size: cover;
+  background-position: center;
+  border: 3px solid #ffc107;
+  border-radius: 10px;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.overlay {
+  position: absolute;
+  top: 10px;
+  width: 100%;
+  text-align: center;
+  color: white;
+  z-index: 10;
+}
+
+.overlay h1 {
+  margin: 0 0 10px;
+  font-size: 2rem;
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.target {
+  position: absolute;
+  display: none;
+  width: 70px;
+  height: 70px;
+  top: 0;
+  left: 0;
+  transform: translateX(0);
+  transition: transform 0s;
+  pointer-events: auto;
+  user-select: none;
+  -webkit-user-drag: none;
+  box-sizing: border-box;
+}
+
+.target-inner {
+  width: 100%;
+  height: 100%;
+  border: 2px dashed white;
+  background-color: rgba(255, 255, 255, 0.05);
+  box-sizing: border-box;
+}
+
+.target-inner img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+}
+
+@keyframes hit-flash {
+  0%   { filter: brightness(1); }
+  50%  { filter: brightness(3); }
+  100% { filter: brightness(1); }
+}
+
+@keyframes hit-shake {
+  0%   { transform: scale(1) translateX(0); }
+  25%  { transform: scale(1.1) translateX(-4px); }
+  50%  { transform: scale(1.15) translateX(4px); }
+  75%  { transform: scale(1.1) translateX(-2px); }
+  100% { transform: scale(1) translateX(0); }
+}
+
+.target-inner.hit {
+  animation: hit-flash 0.25s ease, hit-shake 0.25s ease;
+  will-change: transform, filter;
+}
+
+
+.game-over {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(0, 0, 0, 0.9);
+  padding: 40px;
+  color: white;
+  border: 2px solid #ffc107;
+  border-radius: 10px;
+  text-align: center;
+  z-index: 100;
+  width: 90%;
+  max-width: 400px;
+}
+
+@media (max-width: 600px) {
   .game-container {
-    background-image: url('assets/strzelnica.jpg');
-    background-size: cover;
-    background-position: center;
-    height: 100vh;
-    position: relative;
-    overflow: hidden;
+    height: 400px;
+    padding: 10px;
   }
-  
-  .overlay {
-    position: absolute;
-    width: 100%;
-    z-index: 2;
-    top: 10px;
+
+  .overlay h1 {
+    font-size: 1.4rem;
   }
-  
-  .target {
-    width: 80px;
-    position: absolute;
-    display: none;
-    cursor: url('assets/cursor.png'), crosshair !important;
-  }
-  
-  .fast {
-    animation: move 1s linear infinite alternate;
-  }
-  
-  .medium {
-    animation: move 1.5s linear infinite alternate;
-  }
-  
-  .slow {
-    animation: move 2s linear infinite alternate;
-  }
-  
-  @keyframes move {
-    from { left: 0%; }
-    to { left: 90%; }
-  }
-  
+
   .game-over {
-    position: absolute;
-    top: 40%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: rgba(0,0,0,0.8);
-    padding: 40px;
-    border-radius: 10px;
-    display: none;
-    z-index: 10;
-    border: 2px solid #ffc107;
+    max-width: 280px;
+    padding: 20px;
+    font-size: 0.9rem;
   }
-  
+
+  .game-over h2 {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+  }
+
+  .game-over button {
+    padding: 8px 14px;
+    font-size: 0.9rem;
+  }
+}
