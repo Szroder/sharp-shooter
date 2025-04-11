@@ -14,7 +14,10 @@
       
       <div class="overlay text-center">
         <h1 class="mb-3">🎯 Sharp Shooter</h1>
-        <button id="start-btn" class="btn btn-warning mb-2">Start Game</button>
+        <div class="d-flex justify-content-center gap-2 mb-2">
+          <button id="start-btn" class="btn btn-warning">Start Game</button>
+          <button id="results-btn" class="btn btn-outline-light">Wyniki</button>
+        </div>
         <p>Score: <span id="score">0</span> | Time: <span id="timer">30</span>s</p>
       </div>
 
@@ -36,15 +39,25 @@
         </div>
       </div>
 
-    </div>
-  </div>
 
-  <div id="game-over" class="game-over text-center">
-    <h2 class="mb-3">Game Over!</h2>
-    <p>Score: <span id="final-score">0</span></p>
-    <p>Shots fired: <span id="shots-fired">0</span></p>
-    <p>Accuracy: <span id="accuracy">0</span>%</p>
-    <button id="restart-btn" class="btn btn-light mt-3">Play Again</button>
+      <div id="results-modal" class="results-modal text-center">
+        <h2>Your results</h2>
+        <div id="results-list" class="my-3"></div>
+        <button class="btn btn-light" onclick="closeResults()">Close</button>
+      </div>
+
+      <div id="game-over" class="game-over text-center">
+        <h2 class="mb-3">Game Over!</h2>
+        <p>Score: <span id="final-score">0</span></p>
+        <p>Shots fired: <span id="shots-fired">0</span></p>
+        <p>Accuracy: <span id="accuracy">0</span>%</p>
+        <div class="d-flex justify-content-center gap-2 mt-3">
+          <button id="restart-btn" class="btn btn-light">Play Again</button>
+          <button id="results-btn-gameover" class="btn btn-outline-light">Wyniki</button>
+        </div>
+      </div>
+
+    </div>
   </div>
 
   <script src="script.js"></script>

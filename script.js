@@ -15,6 +15,7 @@ let shotsFired = 0;
 const shotSound = new Audio("assets/pistol-shot.mp3");
 shotSound.load();
 
+
 document.body.addEventListener("click", (e) => {
   const isUI = e.target.closest("#start-btn") ||
                e.target.closest("#restart-btn") ||
@@ -41,7 +42,7 @@ function startGame() {
   gameOverPanel.style.display = "none";
   score = 0;
   shotsFired = 0;
-  timeLeft = 25;
+  timeLeft = 30;
   scoreDisplay.textContent = score;
   timerDisplay.textContent = timeLeft;
   startBtn.disabled = true;
@@ -52,8 +53,8 @@ function startGame() {
     target.addEventListener("click", handleHit);
 
     let speed;
-    if (i === 0) speed = 250;     // górna - średnia
-    else if (i === 1) speed = 350; // środkowa - szybka
+    if (i === 0) speed = 350;     // górna - średnia
+    else if (i === 1) speed = 450; // środkowa - szybka
     else speed = 180;              // dolna - wolna
 
     target.dataset.speed = speed;
@@ -123,6 +124,7 @@ function handleHit(e) {
   }, 300);
 }
 
+
 function endGame() {
   isGameActive = false;
   clearInterval(gameInterval);
@@ -135,9 +137,55 @@ function endGame() {
   const acc = shotsFired > 0 ? Math.round((score / shotsFired) * 100) : 0;
   document.getElementById("shots-fired").textContent = shotsFired;
   document.getElementById("accuracy").textContent = acc;
+  saveResultToStorage(score, shotsFired, acc);
 }
 
 restartBtn.addEventListener("click", () => {
   gameOverPanel.style.display = "none";
   startGame();
 });
+
+function saveResultToStorage(score, shots, accuracy) {
+  const existing = JSON.parse(localStorage.getItem("results") || "[]");
+
+  existing.push({
+    score,
+    shots,
+    accuracy,
+    date: new Date().toLocaleString()
+  });
+
+  localStorage.setItem("results", JSON.stringify(existing));
+}
+document.getElementById("results-btn").addEventListener("click", showResults);
+document.getElementById("results-btn-gameover").addEventListener("click", showResults);
+
+function showResults() {
+  const resultsModal = document.getElementById("results-modal");
+  const resultsList = document.getElementById("results-list");
+
+  const results = JSON.parse(localStorage.getItem("results")) || [];
+
+  results.sort((a, b) => {
+    if (b.score !== a.score) return b.score - a.score;
+    return b.accuracy - a.accuracy;
+  });
+
+  const top10 = results.slice(0, 10); 
+
+  resultsList.innerHTML = top10.map(res => `
+    <div class="d-flex justify-content-between border-bottom py-1">
+      <span class="text-light small">${res.date}</span>
+      <span><strong>${res.score}</strong> pkt</span>
+      <span>${res.accuracy}% accuracy</span>
+    </div>
+  `).join("");
+
+  resultsModal.style.display = "block";
+}
+
+
+function closeResults() {
+  document.getElementById("results-modal").style.display = "none";
+}
+

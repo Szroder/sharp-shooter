@@ -91,47 +91,42 @@ body, html {
   will-change: transform, filter;
 }
 
-
-.game-over {
+.game-over,
+#results-modal {
   display: none;
-  position: fixed;
+  position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: rgba(0, 0, 0, 0.9);
-  padding: 40px;
+  background: rgba(0, 0, 0, 0.95);
+  padding: 30px;
   color: white;
   border: 2px solid #ffc107;
   border-radius: 10px;
   text-align: center;
-  z-index: 100;
   width: 90%;
   max-width: 400px;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+.game-over {
+  z-index: 100;
 }
 
-@media (max-width: 600px) {
-  .game-container {
-    height: 400px;
-    padding: 10px;
-  }
-
-  .overlay h1 {
-    font-size: 1.4rem;
-  }
-
-  .game-over {
-    max-width: 280px;
-    padding: 20px;
-    font-size: 0.9rem;
-  }
-
-  .game-over h2 {
-    font-size: 1.2rem;
-    margin-bottom: 10px;
-  }
-
-  .game-over button {
-    padding: 8px 14px;
-    font-size: 0.9rem;
-  }
+#results-modal {
+  z-index: 200;
 }
+
+#results-list {
+  font-size: 0.9rem;
+}
+
+#results-list > div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  border-bottom: 1px solid #666;
+  padding: 5px 0;
+}
+
